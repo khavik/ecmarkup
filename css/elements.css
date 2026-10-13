@@ -1393,7 +1393,7 @@ a.menu-pane-header-production {
   overflow-y: auto;
 }
 
-li.menu-search-result::before {
+.menu-search-result::before {
   display: none;
   width: 40px;
   text-align: right;
@@ -1401,17 +1401,17 @@ li.menu-search-result::before {
   color: var(--control-dimmed-foreground-color);
   font-size: 75%;
 }
-li.menu-search-result[data-kind]::before {
+.menu-search-result[data-kind]::before {
   display: inline-block;
   content: attr(data-kind);
 }
 
-#menu-search-results ul {
+.menu-search-list {
   padding: 0 5px;
   margin: 0;
 }
 
-#menu-search-results li {
+.menu-search-result {
   white-space: nowrap;
   text-overflow: ellipsis;
 }

@@ -175,7 +175,7 @@ Search.prototype.showSearch = function () {
 };
 
 Search.prototype.selectResult = function () {
-  let $first = this.$searchResults.querySelector('li:first-child a');
+  let $first = this.$searchResults.querySelector('.menu-search-result a');
 
   if ($first) {
     document.location = $first.getAttribute('href');
@@ -194,8 +194,10 @@ Search.prototype.selectResult = function () {
 Search.prototype.displayResults = function (results) {
   if (results.length > 0) {
     this.$searchResults.classList.remove('no-results');
-
-    let html = '<ul>';
+    // As a workaround for a Firefox perf bug, don't use <ul> <li>;
+    // Firefox will reflow the entire document when inserting or removing list elements.
+    // Replace with ARIA roles which are near-instant while still keeping the list semantics.
+    let html = '<div class="menu-search-list" role="list">';
 
     results.forEach(result => {
       let key = result.key;
@@ -224,11 +226,11 @@ Search.prototype.displayResults = function (results) {
       }
 
       if (text) {
-        html += `<li class="menu-search-result"${kind ? ` data-kind="${kind}"` : ''}><a href="${makeLinkToId(id)}">${text}</a></li>`;
+        html += `<div class="menu-search-result" role="listitem"${kind ? ` data-kind="${kind}"` : ''}><a href="${makeLinkToId(id)}">${text}</a></div>`;
       }
     });
 
-    html += '</ul>';
+    html += '</div>';
 
     this.$searchResults.innerHTML = html;
   } else {
